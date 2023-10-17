@@ -1,4 +1,4 @@
-import { FormEventHandler, FunctionComponent } from "react";
+import { FormEventHandler, FunctionComponent, ReactNode } from "react";
 
 interface ReviewProps {
   onSubmit: FormEventHandler;

@@ -45,7 +45,7 @@ const ModalPages: FunctionComponent<ModalPagesProps> = ({ closeModal }) => {
       {pageIndex !== pagesAmout - 1 ? (
         <Button type="submit">Next</Button>
       ) : (
-        <Button type="submit">Finished</Button>
+        <Button type="submit">Finish</Button>
       )}
     </div>
   );
