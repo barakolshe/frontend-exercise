@@ -1,43 +1,36 @@
-"use client";
-import FormLayout from "@/components/shared/FormLayout/FormLayout";
-import Button from "@/components/ui/Button/Button";
 import { TextField } from "@/components/ui/TextField/TextField";
-import { FunctionComponent } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-
-type Inputs = {
-  age: string;
-};
+import { FormEventHandler, FunctionComponent, ReactNode } from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { Inputs } from "../ModalPages";
 
 interface NameFormProps {
-  onSubmit: (data: object) => void;
+  onSubmit: FormEventHandler;
+  register: UseFormRegister<Inputs>;
+  buttons: ReactNode;
+  errors: FieldErrors<Inputs>;
 }
 
-const NameForm: FunctionComponent<NameFormProps> = ({ onSubmit }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: {
-      age: "",
-    },
-  });
-  const _onSubmit: SubmitHandler<Inputs> = (data) => {
-    onSubmit(data);
-  };
-
+const NameForm: FunctionComponent<NameFormProps> = ({
+  onSubmit,
+  register,
+  buttons,
+  errors,
+}) => {
   return (
-    <FormLayout onSubmit={handleSubmit(_onSubmit)}>
-      <TextField
-        className="max-w-[300px]"
-        placeholder="Age"
-        {...register("age", { required: true })}
-      />
-      <Button type="submit" className="max-w-[100px]">
-        Submit
-      </Button>
-    </FormLayout>
+    <form className="flex flex-col gap-8" onSubmit={onSubmit}>
+      <div className="flex flex-col gap-4">
+        <TextField
+          className="max-w-[300px]"
+          placeholder="Age"
+          {...register("age", {
+            required: true,
+            pattern: /^(0|[1-9]\d*)(\.\d+)?$/,
+          })}
+        />
+        {errors.age && <span>Number field required</span>}
+      </div>
+      {buttons}
+    </form>
   );
 };
 

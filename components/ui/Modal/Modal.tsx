@@ -19,7 +19,7 @@ const Modal: FunctionComponent<ModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="bg-modal-background w-[60%] xl:w-[800px]  mx-auto rounded-md p-16 shadow-md relative pb-28"
+        className="bg-modal-background w-[60%] xl:w-[800px]  mx-auto rounded-md p-8 shadow-md relative"
         onClick={(e) => e.stopPropagation()}
         {...props}
       >

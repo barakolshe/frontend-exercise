@@ -1,52 +1,40 @@
-"use client";
-import FormLayout from "@/components/shared/FormLayout/FormLayout";
-import Button from "@/components/ui/Button/Button";
 import { TextField } from "@/components/ui/TextField/TextField";
-import { FunctionComponent } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-
-type Inputs = {
-  firstName: string;
-  lastName: string;
-};
+import { FormEventHandler, FunctionComponent, ReactNode } from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { Inputs } from "../ModalPages";
 
 interface NameFormProps {
-  onSubmit: (data: object) => void;
+  onSubmit: FormEventHandler;
+  register: UseFormRegister<Inputs>;
+  buttons: ReactNode;
+  errors: FieldErrors<Inputs>;
 }
 
-const NameForm: FunctionComponent<NameFormProps> = ({ onSubmit }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-    },
-  });
-  const _onSubmit: SubmitHandler<Inputs> = (data) => {
-    onSubmit(data);
-  };
-
+const NameForm: FunctionComponent<NameFormProps> = ({
+  onSubmit,
+  register,
+  buttons,
+  errors,
+}) => {
   return (
-    <FormLayout onSubmit={handleSubmit(_onSubmit)}>
-      <TextField
-        className="max-w-[300px]"
-        placeholder="First name"
-        {...register("firstName", { required: true })}
-      />
+    <form className="flex flex-col gap-8" onSubmit={onSubmit}>
+      <div className="flex flex-col gap-4">
+        <TextField
+          className="max-w-[300px]"
+          placeholder="First name"
+          {...register("firstName", { required: true })}
+        />
+        {errors.firstName && <span>This field is required</span>}
 
-      <TextField
-        placeholder="Last name"
-        className="max-w-[300px]"
-        {...register("lastName", { required: true })}
-      />
-
-      <Button type="submit" className="max-w-[100px]">
-        Submit
-      </Button>
-    </FormLayout>
+        <TextField
+          className="max-w-[300px]"
+          placeholder="Last name "
+          {...register("lastName", { required: true })}
+        />
+        {errors.lastName && <span>This field is required</span>}
+      </div>
+      {buttons}
+    </form>
   );
 };
 

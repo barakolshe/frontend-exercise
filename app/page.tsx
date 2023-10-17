@@ -12,7 +12,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <Button onClick={() => setModalState(!modalState)}>Open the modal</Button>
       <Modal open={modalState} onClose={() => setModalState(false)}>
-        <ModalPages />
+        <ModalPages closeModal={() => setModalState(false)} />
       </Modal>
     </main>
   );
